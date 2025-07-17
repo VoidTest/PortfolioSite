@@ -146,10 +146,10 @@ if (testimonials.length > 0) {
     });
 }
 
-// Create particle stars effect
+// Create stars dynamically
 function createStars() {
-    const starsContainer = document.querySelector('.stars');
-    const starCount = 100;
+    const starsContainer = document.getElementById('starsContainer');
+    const starCount = 200;
     
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
@@ -159,58 +159,179 @@ function createStars() {
         const x = Math.random() * 100;
         const y = Math.random() * 100;
         
-        // Random size
-        const size = Math.random() * 3;
+        // Random size (0.5px to 3px)
+        const size = Math.random() * 2.5 + 0.5;
         
         // Random opacity
         const opacity = Math.random() * 0.5 + 0.5;
         
-        // Random animation delay
-        const animationDelay = Math.random() * 10;
+        // Some stars will twinkle
+        if (Math.random() > 0.7) {
+            star.classList.add('twinkle');
+            // Random animation delay
+            const animationDelay = Math.random() * 4;
+            star.style.animationDelay = `${animationDelay}s`;
+        }
         
         star.style.cssText = `
-            position: absolute;
             top: ${y}%;
             left: ${x}%;
             width: ${size}px;
             height: ${size}px;
-            background-color: white;
-            border-radius: 50%;
             opacity: ${opacity};
-            animation: twinkle 5s infinite ease-in-out ${animationDelay}s;
         `;
         
         starsContainer.appendChild(star);
     }
 }
 
-// Random astronaut movement
-function moveAstronaut() {
-    const astronaut = document.querySelector('.astronaut');
-    if (!astronaut) return;
+// Create improved shooting stars/comets (more rare, better animation)
+function createShootingStars() {
+    const shootingStarsContainer = document.getElementById('shootingStars');
     
+    // Create a new comet less frequently (more rare)
     setInterval(() => {
-        const startX = -100;
-        const startY = Math.random() * window.innerHeight;
-        const endX = window.innerWidth + 100;
-        const endY = Math.random() * window.innerHeight;
-        const duration = 40 + Math.random() * 20;
-        const rotation = Math.random() * 720 - 360;
-        
-        astronaut.style.transition = 'none';
-        astronaut.style.transform = `translate(${startX}px, ${startY}px) rotate(0deg)`;
-        
-        setTimeout(() => {
-            astronaut.style.transition = `all ${duration}s linear`;
-            astronaut.style.transform = `translate(${endX}px, ${endY}px) rotate(${rotation}deg)`;
-        }, 100);
-    }, 40000);
+        // Only create a comet 30% of the time to make them more rare
+        if (Math.random() > 0.7) {
+            const shootingStar = document.createElement('div');
+            shootingStar.classList.add('shooting-star');
+            
+            // Random position (top half of screen mostly)
+            const startX = Math.random() * 70;
+            const startY = Math.random() * 50;
+            
+            // Random length for the comet tail
+            const length = Math.random() * 150 + 50;
+            
+            // Random duration for the animation
+            const duration = Math.random() * 3 + 2;
+            
+            shootingStar.style.cssText = `
+                top: ${startY}%;
+                left: ${startX}%;
+                width: ${length}px;
+                animation-duration: ${duration}s;
+            `;
+            
+            shootingStarsContainer.appendChild(shootingStar);
+            
+            // Remove the shooting star after animation ends
+            setTimeout(() => {
+                shootingStar.remove();
+            }, duration * 1000);
+        }
+    }, 8000); // Check every 8 seconds (making comets much more rare)
 }
 
-// Initialize effects
+// Replace astronaut with spaceship animation
+function animateSpaceship() {
+    const spaceship = document.getElementById('flyingSpaceship');
+    if (!spaceship) return;
+    
+    // The animation is handled by CSS, but we can add some random variations
+    setInterval(() => {
+        // Random size variation
+        const size = (Math.random() * 0.4 + 0.8).toFixed(2); // 0.8 to 1.2
+        
+        // Slightly random flight path
+        const yOffset = (Math.random() * 40 - 20).toFixed(0); // -20 to +20
+        
+        spaceship.style.transform = `scale(${size})`;
+        
+        // Reset the animation
+        spaceship.style.animation = 'none';
+        spaceship.offsetHeight; // Trigger reflow
+        
+        // Random animation duration
+        const duration = Math.floor(Math.random() * 20 + 30); // 30-50s
+        
+        spaceship.style.animation = `fly-spaceship ${duration}s linear forwards`;
+        
+        // Add some Y position randomness
+        const keyframes = `
+            @keyframes fly-spaceship {
+                0% {
+                    transform: translate(-150px, calc(50vh ${yOffset > 0 ? '+' : ''} ${yOffset}px)) rotate(10deg) scale(${size});
+                    opacity: 0;
+                }
+                5% {
+                    opacity: 1;
+                }
+                45% {
+                    transform: translate(calc(40vw), calc(20vh ${yOffset > 0 ? '+' : ''} ${yOffset}px)) rotate(-5deg) scale(${size});
+                }
+                55% {
+                    transform: translate(calc(60vw), calc(40vh ${yOffset > 0 ? '-' : '+'} ${yOffset}px)) rotate(5deg) scale(${size});
+                }
+                95% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(calc(100vw + 150px), calc(70vh ${yOffset > 0 ? '+' : ''} ${yOffset}px)) rotate(-10deg) scale(${size});
+                    opacity: 0;
+                }
+            }
+        `;
+        
+        // Add the keyframes to the stylesheet
+        const styleSheet = document.createElement('style');
+        styleSheet.innerHTML = keyframes;
+        document.head.appendChild(styleSheet);
+        
+    }, 40000); // New spaceship flight every 40 seconds
+}
+
+// Remove or modify the nebula effect that's creating unwanted circular gradients
+function createNebula() {
+    // Completely remove this function or leave it empty
+    // This will prevent the creation of those circular gradients
+    return; // Early return to prevent any execution
+    
+    /* Original code commented out:
+    const spaceBackground = document.querySelector('.space-background');
+    
+    // Create several nebula clouds with different colors
+    const colors = [
+        'rgba(100, 255, 218, 0.03)', // Cyan
+        'rgba(125, 95, 255, 0.03)',  // Purple
+        'rgba(255, 100, 100, 0.03)'  // Red
+    ];
+    
+    colors.forEach((color, index) => {
+        const nebula = document.createElement('div');
+        
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Random size
+        const size = Math.random() * 300 + 200;
+        
+        nebula.style.cssText = `
+            position: absolute;
+            top: ${y}%;
+            left: ${x}%;
+            width: ${size}px;
+            height: ${size}px;
+            background: radial-gradient(circle at center, ${color} 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(30px);
+            z-index: -1;
+            opacity: 0.7;
+        `;
+        
+        spaceBackground.appendChild(nebula);
+    });
+    */
+}
+
+// Initialize all dynamic space elements
 document.addEventListener('DOMContentLoaded', function() {
     createStars();
-    moveAstronaut();
+    createShootingStars();
+    // Remove the createNebula() call if you want to completely disable it
+    // createNebula();
+    animateSpaceship(); // Replace moveAstronaut() with animateSpaceship()
 });
 
 // Form validation

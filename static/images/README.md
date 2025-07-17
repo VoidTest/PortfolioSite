@@ -1,30 +1,21 @@
 # Images Directory
 
-This directory should contain the following image files for your space-themed portfolio:
+With our code-generated space elements, we've significantly reduced the number of images needed. Here are the only images you might still want to include:
 
-## Background Elements
-1. `stars.png` - A repeating pattern of small stars on a dark background
-2. `twinkling.png` - A semi-transparent pattern for the twinkling animation
+## Minecraft Projects (Optional)
+1. `texture-pack1.jpg` - Preview image of your Minecraft texture pack
+2. `build1.jpg` - Image of your Minecraft build
 
-## Minecraft Projects
-3. `texture-pack1.jpg` - Preview image of your Minecraft texture pack
-4. `build1.jpg` - Image of your Minecraft build
+## Personal Avatar (Optional)
+3. `profile-pic.jpg` - Your professional headshot or avatar (optional - can use CSS-based initials instead)
 
-## Personal Assets
-5. `profile-pic.jpg` - Your professional headshot or avatar
-6. `astronaut.png` - A transparent PNG of an astronaut (for floating animation)
-7. `spaceship.png` - A transparent PNG of a spaceship
+## Alternative Options
+Instead of using images, our site now uses:
+- CSS-generated astronaut animation
+- CSS-generated spaceship
+- JavaScript-generated stars and shooting stars
+- CSS-generated planets and orbits
+- CSS gradients for cards without images
+- CSS-based avatar with initials
 
-## Additional Assets
-8. `logo.png` - Your personal logo (optional)
-9. `planet1.png`, `planet2.png` - Planet images for background elements
-10. `project-thumbnails/*.jpg` - Thumbnails for your projects
-
-You can find free space-themed assets on these websites:
-- Unsplash.com
-- Pexels.com
-- Freepik.com
-- NASA's image gallery (nasa.gov)
-- Pixabay.com
-
-Make sure all images you use are either your own, licensed for your use, or free for commercial use.
+If you want to add any images, make sure they are optimized for web (compressed) to ensure fast loading times.

@@ -26,6 +26,368 @@ body {
     line-height: 1.6;
 }
 
+/* CSS-generated space background */
+.space-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: linear-gradient(to bottom, #05050d 0%, #0a0a1a 50%, #1a1a3a 100%);
+    overflow: hidden;
+}
+
+/* CSS-generated stars */
+.star {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #ffffff, 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.star.twinkle {
+    animation: twinkle 4s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Shooting stars */
+.shooting-star {
+    position: absolute;
+    height: 3px;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), #ffffff 40%, rgba(70, 160, 255, 0.5) 100%);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+    transform: rotate(-45deg);
+    animation: shooting 4s linear forwards;
+}
+
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: 0;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7);
+}
+
+@keyframes shooting {
+    from {
+        transform: translateX(0) translateY(0) rotate(-45deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(700px) translateY(700px) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+/* CSS-generated planets */
+.planets {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.planet-orbit {
+    position: absolute;
+    transform-style: preserve-3d;
+}
+
+.planet-orbit-1 {
+    top: 15%;
+    right: 10%;
+}
+
+.planet-orbit-2 {
+    bottom: 10%;
+    left: 5%;
+}
+
+.planet-orbit-3 {
+    top: 60%;
+    right: 20%;
+}
+
+.planet {
+    position: relative;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    transform-style: preserve-3d;
+}
+
+/* Remove the ::after pseudo-element that was previously used for moons */
+/* And modify the ::before to only show the orbit line, not any circles */
+.planet::before {
+    content: '';
+    position: absolute;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    background: none; /* Ensure no background color or gradient */
+}
+
+/* Remove any background styles from pseudo-elements in planet-specific rules */
+.planet-1::before {
+    width: 300px;
+    height: 300px;
+    background: none; /* Explicitly remove any background */
+}
+
+.planet-2::before {
+    width: 200px;
+    height: 200px;
+    background: none; /* Explicitly remove any background */
+}
+
+.planet-3::before {
+    width: 150px;
+    height: 150px;
+    background: none; /* Explicitly remove any background */
+}
+
+/* If there were any ::after elements still defined, remove them */
+.planet-1::after,
+.planet-2::after,
+.planet-3::after {
+    display: none; /* Hide any remaining ::after pseudo-elements */
+}
+
+/* Moon as an actual element, not a pseudo-element */
+.moon {
+    position: absolute;
+    border-radius: 50%;
+    background: #d1d1d1;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.planet-1 {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, #ff7b7b, #6b0000);
+    animation: orbit1 120s linear infinite;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+}
+
+.planet-1::before {
+    width: 300px;
+    height: 300px;
+}
+
+.planet-1 .moon {
+    width: 15px;
+    height: 15px;
+    animation: orbit-moon 10s linear infinite;
+    transform-origin: 30px 30px;
+}
+
+.planet-2 {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 30% 30%, #7b96ff, #000a6b);
+    animation: orbit2 90s linear infinite;
+    top: calc(50% - 20px);
+    left: calc(50% - 20px);
+}
+
+.planet-2::before {
+    width: 200px;
+    height: 200px;
+}
+
+.planet-2 .moon {
+    width: 12px;
+    height: 12px;
+    background: #a0a0a0;
+    animation: orbit-moon 8s linear infinite reverse;
+    transform-origin: 20px 20px;
+}
+
+.planet-3 {
+    width: 25px;
+    height: 25px;
+    background: radial-gradient(circle at 30% 30%, #ffdb7b, #6b4800);
+    animation: orbit3 60s linear infinite;
+    top: calc(50% - 12.5px);
+    left: calc(50% - 12.5px);
+}
+
+.planet-3::before {
+    width: 150px;
+    height: 150px;
+}
+
+.planet-3 .moon {
+    width: 8px;
+    height: 8px;
+    background: #e0e0e0;
+    animation: orbit-moon 6s linear infinite;
+    transform-origin: 12.5px 12.5px;
+}
+
+@keyframes orbit1 {
+    from { transform: rotate(0deg) translate(150px) rotate(0deg); }
+    to { transform: rotate(360deg) translate(150px) rotate(-360deg); }
+}
+
+@keyframes orbit2 {
+    from { transform: rotate(0deg) translate(100px) rotate(0deg); }
+    to { transform: rotate(360deg) translate(100px) rotate(-360deg); }
+}
+
+@keyframes orbit3 {
+    from { transform: rotate(0deg) translate(75px) rotate(0deg); }
+    to { transform: rotate(360deg) translate(75px) rotate(-360deg); }
+}
+
+@keyframes orbit-moon {
+    from { transform: rotate(0deg) translate(30px) rotate(0deg); }
+    to { transform: rotate(360deg) translate(30px) rotate(-360deg); }
+}
+
+/* CSS-generated spaceship */
+.flying-spaceship {
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    width: 100px;
+    height: 40px;
+    animation: fly-spaceship 40s linear infinite;
+}
+
+.spaceship-body {
+    width: 80px;
+    height: 30px;
+    background: linear-gradient(to bottom, #a0a0a0, #505050);
+    border-radius: 50% 50% 10px 10px;
+    position: relative;
+}
+
+.spaceship-cockpit {
+    width: 25px;
+    height: 25px;
+    background: linear-gradient(135deg, #64ffda, #0a8a70);
+    border-radius: 50% 50% 0 0;
+    position: absolute;
+    top: -12px;
+    left: 28px;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.7);
+}
+
+.spaceship-window {
+    width: 15px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    box-shadow: 0 0 5px white inset;
+}
+
+.spaceship-wing {
+    position: absolute;
+    height: 10px;
+    background: #707070;
+    border-radius: 3px;
+}
+
+.spaceship-wing-left {
+    width: 30px;
+    top: 15px;
+    left: -25px;
+    transform: skew(0deg, -15deg);
+}
+
+.spaceship-wing-right {
+    width: 30px;
+    top: 15px;
+    right: -25px;
+    transform: skew(0deg, 15deg);
+}
+
+.spaceship-engine {
+    width: 15px;
+    height: 8px;
+    background: #505050;
+    position: absolute;
+    bottom: -4px;
+    border-radius: 0 0 5px 5px;
+}
+
+.spaceship-engine-left {
+    left: 15px;
+}
+
+.spaceship-engine-right {
+    right: 15px;
+}
+
+.spaceship-flame {
+    position: absolute;
+    bottom: -12px;
+    width: 10px;
+    height: 15px;
+    border-radius: 0 0 5px 5px;
+}
+
+.spaceship-flame-left {
+    left: 2px;
+    background: linear-gradient(to bottom, #ff6a00, transparent);
+    animation: flame 0.2s infinite alternate;
+}
+
+.spaceship-flame-right {
+    right: 2px;
+    background: linear-gradient(to bottom, #ff6a00, transparent);
+    animation: flame 0.2s infinite alternate 0.1s;
+}
+
+@keyframes flame {
+    from { height: 12px; opacity: 0.7; }
+    to { height: 18px; opacity: 0.9; }
+}
+
+@keyframes fly-spaceship {
+    0% {
+        transform: translate(-150px, 50vh) rotate(10deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    45% {
+        transform: translate(calc(40vw), 20vh) rotate(-5deg);
+    }
+    55% {
+        transform: translate(calc(60vw), 40vh) rotate(5deg);
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(100vw + 150px), 70vh) rotate(-10deg);
+        opacity: 0;
+    }
+}
+
 /* Enhanced background elements */
 .stars, .twinkling, .planets {
     position: fixed;
@@ -93,29 +455,6 @@ body {
 @keyframes move-twink-back {
     from {background-position: 0 0;}
     to {background-position: -10000px 5000px;}
-}
-
-/* Astronaut animation */
-.astronaut {
-    position: fixed;
-    z-index: -1;
-    opacity: 0.8;
-    pointer-events: none;
-}
-
-.astronaut img {
-    width: 100px;
-    height: auto;
-    animation: float-astronaut 40s infinite linear;
-}
-
-@keyframes float-astronaut {
-    0% {
-        transform: translate(-100px, 100vh) rotate(0deg);
-    }
-    100% {
-        transform: translate(calc(100vw + 100px), -100px) rotate(360deg);
-    }
 }
 
 /* Typography */
@@ -1063,6 +1402,35 @@ footer {
     transform: translateY(-5px);
 }
 
+/* CSS avatar when no image is available */
+.css-avatar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Project image placeholder */
+.mc-img-placeholder {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.8);
+    transition: transform 0.3s ease;
+}
+
+.mc-card:hover .mc-img-placeholder {
+    transform: scale(1.05);
+}
+
 /* Responsive styles */
 @media (max-width: 992px) {
     .about-content, .contact-content {
@@ -1145,4 +1513,103 @@ footer {
     .footer-links {
         margin-top: 20px;
     }
+}
+    .contact-form {
+        margin-top: 50px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+    }
+    
+    .footer-links {
+        margin-top: 20px;
+    }
+}
+
+/* Moon with visible orbit path */
+.moon-orbit {
+    position: absolute;
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+.planet-1 .moon-orbit {
+    width: 80px;
+    height: 80px;
+}
+
+.planet-2 .moon-orbit {
+    width: 60px;
+    height: 60px;
+}
+
+.planet-3 .moon-orbit {
+    width: 40px;
+    height: 40px;
+}
+
+.moon-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.planet-1 .moon-container {
+    animation-name: rotate-moon-container;
+    animation-duration: 10s;
+}
+
+.planet-2 .moon-container {
+    animation-name: rotate-moon-container;
+    animation-duration: 8s;
+    animation-direction: reverse;
+}
+
+.planet-3 .moon-container {
+    animation-name: rotate-moon-container;
+    animation-duration: 6s;
+}
+
+.moon {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.planet-1 .moon {
+    width: 15px;
+    height: 15px;
+    background: #d1d1d1;
+    top: 0;
+    left: calc(50% - 7.5px); /* Half the moon width */
+}
+
+.planet-2 .moon {
+    width: 12px;
+    height: 12px;
+    background: #a0a0a0;
+    top: 0;
+    left: calc(50% - 6px); /* Half the moon width */
+}
+
+.planet-3 .moon {
+    width: 8px;
+    height: 8px;
+    background: #e0e0e0;
+    top: 0;
+    left: calc(50% - 4px); /* Half the moon width */
+}
+
+@keyframes rotate-moon-container {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }

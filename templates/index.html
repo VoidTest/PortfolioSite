@@ -11,17 +11,67 @@
 </head>
 <body>
     <!-- Space background elements -->
-    <div class="stars"></div>
-    <div class="twinkling"></div>
-    <div class="planets">
-        <div class="planet planet-1"></div>
-        <div class="planet planet-2"></div>
-        <div class="planet planet-3"></div>
+    <div class="space-background">
+        <div class="stars-container" id="starsContainer"></div>
+        <div class="shooting-stars" id="shootingStars"></div>
     </div>
     
-    <!-- Floating astronaut animation -->
-    <div class="astronaut">
-        <img src="{{ url_for('static', filename='images/astronaut.png') }}" alt="Floating Astronaut">
+    <!-- SVG planets with orbits that follow them -->
+    <div class="planets">
+        <div class="planet-orbit planet-orbit-1">
+            <div class="planet planet-1">
+                <div class="moon-orbit">
+                    <div class="moon-container">
+                        <div class="moon"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="planet-orbit planet-orbit-2">
+            <div class="planet planet-2">
+                <div class="moon-orbit">
+                    <div class="moon-container">
+                        <div class="moon"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="planet-orbit planet-orbit-3">
+            <div class="planet planet-3">
+                <div class="moon-orbit">
+                    <div class="moon-container">
+                        <div class="moon"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Replace astronaut with enhanced spaceship -->
+    <div class="flying-spaceship" id="flyingSpaceship">
+        <div class="spaceship-body">
+            <div class="spaceship-cockpit">
+                <div class="spaceship-window"></div>
+            </div>
+            <div class="spaceship-wing spaceship-wing-left"></div>
+            <div class="spaceship-wing spaceship-wing-right"></div>
+            <div class="spaceship-engine spaceship-engine-left">
+                <div class="spaceship-flame spaceship-flame-left"></div>
+            </div>
+            <div class="spaceship-engine spaceship-engine-right">
+                <div class="spaceship-flame spaceship-flame-right"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Space ship using CSS -->
+    <div class="space-ship" id="spaceShip">
+        <div class="ship-body">
+            <div class="ship-window"></div>
+            <div class="ship-engine">
+                <div class="ship-flame"></div>
+            </div>
+        </div>
     </div>
     
     <header>
@@ -72,7 +122,13 @@
             <div class="about-content">
                 <div class="about-image" data-aos="fade-right">
                     <div class="image-container">
+                        {% if personal_info.avatar %}
                         <img src="{{ personal_info.avatar }}" alt="{{ personal_info.name }}">
+                        {% else %}
+                        <div class="css-avatar" style="background-color: {{ personal_info.avatar_color }}">
+                            <span>{{ personal_info.initials }}</span>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="about-text" data-aos="fade-left">
@@ -130,11 +186,18 @@
             <div class="mc-tabs">
                 <button class="tab-btn active" data-tab="textures">Texture Packs</button>
                 <button class="tab-btn" data-tab="builds">Builds</button>
+                <button class="tab-btn" data-tab="mods">Mods</button>
             </div>
             <div class="mc-grid tab-content active" id="textures">
                 {% for project in minecraft_projects if 'Texture' in project.name %}
                 <div class="mc-card" data-aos="flip-left" data-aos-delay="{{ loop.index * 100 }}">
+                    {% if project.image %}
                     <div class="mc-img" style="background-image: url('{{ project.image }}')"></div>
+                    {% else %}
+                    <div class="mc-img-placeholder" style="background: linear-gradient(135deg, {{ project.colors[0] }}, {{ project.colors[1] }})">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    {% endif %}
                     <div class="mc-card-content">
                         <h3>{{ project.name }}</h3>
                         <p>{{ project.description }}</p>
@@ -146,7 +209,31 @@
             <div class="mc-grid tab-content" id="builds">
                 {% for project in minecraft_projects if 'Build' in project.name %}
                 <div class="mc-card" data-aos="flip-left" data-aos-delay="{{ loop.index * 100 }}">
+                    {% if project.image %}
                     <div class="mc-img" style="background-image: url('{{ project.image }}')"></div>
+                    {% else %}
+                    <div class="mc-img-placeholder" style="background: linear-gradient(135deg, {{ project.colors[0] }}, {{ project.colors[1] }})">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    {% endif %}
+                    <div class="mc-card-content">
+                        <h3>{{ project.name }}</h3>
+                        <p>{{ project.description }}</p>
+                        <a href="#" class="mc-btn">View Details</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="mc-grid tab-content" id="mods">
+                {% for project in minecraft_projects if 'Mod' in project.name or 'Survival' in project.name %}
+                <div class="mc-card" data-aos="flip-left" data-aos-delay="{{ loop.index * 100 }}">
+                    {% if project.image %}
+                    <div class="mc-img" style="background-image: url('{{ project.image }}')"></div>
+                    {% else %}
+                    <div class="mc-img-placeholder" style="background: linear-gradient(135deg, {{ project.colors[0] }}, {{ project.colors[1] }})">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    {% endif %}
                     <div class="mc-card-content">
                         <h3>{{ project.name }}</h3>
                         <p>{{ project.description }}</p>

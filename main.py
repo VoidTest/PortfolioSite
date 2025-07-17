@@ -23,13 +23,25 @@ def home():
     minecraft_projects = [
         {
             'name': 'Space Texture Pack',
-            'description': 'A space-themed texture pack for Minecraft',
-            'image': 'static/images/texture-pack1.jpg'
+            'description': 'A space-themed texture pack for Minecraft with custom sky, block, and item textures.',
+            'image': 'static/images/texture-pack1.jpg',
+            'colors': ['#64ffda', '#0a8a70'] # For CSS-based project cards if no image is available
         },
         {
             'name': 'Galactic Build',
-            'description': 'A massive space station build in Minecraft',
-            'image': 'static/images/build1.jpg'
+            'description': 'A massive space station build in Minecraft featuring advanced redstone mechanisms.',
+            'image': 'static/images/build1.jpg',
+            'colors': ['#7d5fff', '#3b1da4']
+        },
+        {
+            'name': 'Cosmic Mod',
+            'description': 'A custom mod adding space-themed blocks and items to enhance your Minecraft universe.',
+            'colors': ['#ff5f7d', '#a41d4d'] # No image, will use CSS gradient
+        },
+        {
+            'name': 'Asteroid Survival',
+            'description': 'A challenging survival map set on an asteroid with limited resources and unique mechanics.',
+            'colors': ['#ffbc5f', '#a46e1d']
         }
     ]
     
@@ -43,8 +55,10 @@ def home():
         'title': 'Developer & Creative Designer',
         'bio': 'I am a passionate developer with a creative eye for design. I love building innovative solutions and creating immersive digital experiences.',
         'location': 'City, Country',
-        'avatar': 'static/images/profile-pic.jpg',
-        'resume_link': 'static/files/resume.pdf'
+        'avatar': None, # We'll use CSS-generated avatar or initials
+        'resume_link': 'static/files/resume.pdf',
+        'initials': 'YN', # For CSS-based avatar
+        'avatar_color': '#64ffda'
     }
     
     # Add education and experience
