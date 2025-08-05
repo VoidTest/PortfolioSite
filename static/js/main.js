@@ -146,7 +146,7 @@ if (testimonials.length > 0) {
     });
 }
 
-// Create stars dynamically
+// Create stars with correct z-index
 function createStars() {
     const starsContainer = document.getElementById('starsContainer');
     const starCount = 200;
@@ -174,18 +174,23 @@ function createStars() {
         }
         
         star.style.cssText = `
+            position: absolute;
             top: ${y}%;
             left: ${x}%;
             width: ${size}px;
             height: ${size}px;
             opacity: ${opacity};
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 4px #ffffff, 0 0 8px rgba(255, 255, 255, 0.5);
+            z-index: 2; /* Ensure consistent z-index */
         `;
         
         starsContainer.appendChild(star);
     }
 }
 
-// Create improved shooting stars/comets (more rare, better animation)
+// Create improved shooting stars/comets with dynamic tail direction
 function createShootingStars() {
     const shootingStarsContainer = document.getElementById('shootingStars');
     
@@ -196,9 +201,19 @@ function createShootingStars() {
             const shootingStar = document.createElement('div');
             shootingStar.classList.add('shooting-star');
             
-            // Random position (top half of screen mostly)
+            // Random position across the screen
             const startX = Math.random() * 70;
             const startY = Math.random() * 50;
+            
+            // Random direction for the comet (angle in degrees)
+            const angle = Math.floor(Math.random() * 360);
+            
+            // Calculate end position based on angle
+            // We'll use a fixed distance for simplicity
+            const distance = 1000;
+            const radians = angle * Math.PI / 180;
+            const endX = startX + (Math.cos(radians) * distance);
+            const endY = startY + (Math.sin(radians) * distance);
             
             // Random length for the comet tail
             const length = Math.random() * 150 + 50;
@@ -206,21 +221,49 @@ function createShootingStars() {
             // Random duration for the animation
             const duration = Math.random() * 3 + 2;
             
+            // Set initial position and rotation
             shootingStar.style.cssText = `
                 top: ${startY}%;
                 left: ${startX}%;
                 width: ${length}px;
-                animation-duration: ${duration}s;
+                transform: rotate(${angle}deg);
+                animation: none;
             `;
+            
+            // Create a unique animation for this shooting star
+            const animationName = `shooting-${Date.now()}`;
+            const keyframes = `
+                @keyframes ${animationName} {
+                    from {
+                        transform: rotate(${angle}deg) translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: rotate(${angle}deg) translateX(${distance}px);
+                        opacity: 0;
+                    }
+                }
+            `;
+            
+            // Add the keyframes to the stylesheet
+            const styleSheet = document.createElement('style');
+            styleSheet.innerHTML = keyframes;
+            document.head.appendChild(styleSheet);
+            
+            // Apply the animation
+            setTimeout(() => {
+                shootingStar.style.animation = `${animationName} ${duration}s linear forwards`;
+            }, 10);
             
             shootingStarsContainer.appendChild(shootingStar);
             
             // Remove the shooting star after animation ends
             setTimeout(() => {
                 shootingStar.remove();
+                styleSheet.remove(); // Clean up the style element
             }, duration * 1000);
         }
-    }, 8000); // Check every 8 seconds (making comets much more rare)
+    }, 8000); // Check every 8 seconds (making comets more rare)
 }
 
 // Replace astronaut with spaceship animation
@@ -329,9 +372,10 @@ function createNebula() {
 document.addEventListener('DOMContentLoaded', function() {
     createStars();
     createShootingStars();
-    // Remove the createNebula() call if you want to completely disable it
-    // createNebula();
-    animateSpaceship(); // Replace moveAstronaut() with animateSpaceship()
+    // createNebula(); - already removed
+    animateSpaceship();
+    
+    // Make sure there's no moon-related code here
 });
 
 // Form validation

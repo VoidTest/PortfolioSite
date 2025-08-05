@@ -10,39 +10,32 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
-    <!-- Space background elements -->
+    <!-- Restructured background elements with proper z-index -->
+    <!-- Space background first (lowest) -->
     <div class="space-background">
+        <!-- Stars layer -->
         <div class="stars-container" id="starsContainer"></div>
+        <!-- Shooting stars layer -->
         <div class="shooting-stars" id="shootingStars"></div>
     </div>
-    
-    <!-- SVG planets with orbits that follow them -->
+
+    <!-- Planets layer as separate element (above background) -->
     <div class="planets">
         <div class="planet-orbit planet-orbit-1">
             <div class="planet planet-1">
-                <div class="moon-orbit">
-                    <div class="moon-container">
-                        <div class="moon"></div>
-                    </div>
-                </div>
+                <!-- Removed planet-orbit-line div -->
             </div>
         </div>
+        
         <div class="planet-orbit planet-orbit-2">
             <div class="planet planet-2">
-                <div class="moon-orbit">
-                    <div class="moon-container">
-                        <div class="moon"></div>
-                    </div>
-                </div>
+                <!-- Removed planet-orbit-line div -->
             </div>
         </div>
+        
         <div class="planet-orbit planet-orbit-3">
             <div class="planet planet-3">
-                <div class="moon-orbit">
-                    <div class="moon-container">
-                        <div class="moon"></div>
-                    </div>
-                </div>
+                <!-- Removed planet-orbit-line div -->
             </div>
         </div>
     </div>
@@ -104,6 +97,7 @@
                     <a href="{{ personal_info.resume_link }}" class="cta-btn secondary" download>Download Resume</a>
                 </div>
             </div>
+            <!-- Make the orbit system adapt to available space -->
             <div class="orbit-system">
                 <div class="orbit">
                     <div class="planet"></div>
